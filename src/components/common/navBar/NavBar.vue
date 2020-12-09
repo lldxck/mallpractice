@@ -20,6 +20,7 @@ export default {
   height:44px;
   line-height: 44px;
   position: fixed;
+  z-index: 99;
   top:0;
   left: 0;
   right: 0;
