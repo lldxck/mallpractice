@@ -3,11 +3,11 @@
     <!-- 顶部导航 -->
     <main-nav-bar title="首页" />
     <!-- 首页轮播 -->
-    <scroll class="scrollContainer">
+    <scroll class="scrollWrapper" @pullUpLoad="goodsPullUpLoad" >
       <home-swiper :bannerData="banner" />
       <recommend-view :recommendData="recommend" />
       <feature-view />
-      <tab-control :tabs="tabs" @tabItemClick="tabClick" />
+      <tab-control :tabs="tabs" @tabItemClick="tabClick" ref="tabs"/>
       <goods-list :goods="goods[currentTab].list" />
     </scroll>
   </div>
@@ -35,10 +35,12 @@ export default {
         new: { list: [], page: 0 },
         sell: { list: [], page: 0 }
       },
-      currentTab: "pop"
+      currentTab: "pop",
+      isSticky:false
     };
   },
-  mounted() {
+
+  created() {
     this.getHomeMultidata();
     this.getGoodsData("pop");
     this.getGoodsData("new");
@@ -84,7 +86,13 @@ export default {
         default:
           this.currentTab = "pop";
       }
-    }
+    },
+    goodsPullUpLoad(scroll){
+      console.log('上拉加载数据')
+      this.getGoodsData(this.currentTab)
+      scroll.finishPullUp()
+    },
+    
   },
   components: {
     MainNavBar,
@@ -101,11 +109,13 @@ export default {
 <style>
 .homePage {
   padding-top: 44px;
-  padding-bottom: 80px;
-  height: 100%;
+  padding-bottom: 49px;
+  box-sizing: border-box;
 }
-.scrollContainer{
-  height:100vh;
+.scrollWrapper {
+  height: calc(100vh - 93px);
   overflow: hidden;
+  
 }
+
 </style>

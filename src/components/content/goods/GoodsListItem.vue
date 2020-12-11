@@ -1,4 +1,12 @@
 <template>
+  <!-- <div class="goodsListItem">
+    <img src="" alt="" />
+    <div class="title">哈哈哈哈</div>
+    <div class="goodInfo">
+      <span class="price">¥32</span>
+      <span class="collect">11</span>
+    </div> 
+  </div> -->
   <div class="goodsListItem">
     <img :src="goodsItem.show.img" alt="" />
     <div class="title">{{goodsItem.title}}</div>
@@ -34,7 +42,7 @@ export default {
 }
 .goodsListItem img {
   width: 100%;
-  /* height: 260px; */
+  height: 260px;
 }
 .title {
   font-size: 16px;
