@@ -8,7 +8,8 @@
     </div> 
   </div> -->
   <div class="goodsListItem">
-    <img :src="goodsItem.show.img" alt="" />
+    <!-- load事件=>监听img加载完成执行的事件 -->
+    <img :src="goodsItem.show.img" alt="" @load="imgLoad"/>
     <div class="title">{{goodsItem.title}}</div>
     <div class="goodInfo">
       <span class="price">¥{{goodsItem.price}}</span>
@@ -30,7 +31,13 @@ export default {
   },
   data() {
     return {};
-  }
+  },
+  methods:{
+    imgLoad(){
+      console.log('图片加载完成')
+      this.$bus.$emit('goodsItemImageLoad')
+    }
+  },
 };
 </script>
 

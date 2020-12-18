@@ -3,13 +3,20 @@
     <!-- 顶部导航 -->
     <main-nav-bar title="首页" />
     <!-- 首页轮播 -->
-    <scroll class="scrollWrapper" @pullUpLoad="goodsPullUpLoad" >
+    <scroll
+      class="scrollWrapper"
+      @pullUpLoad="goodsPullUpLoad"
+      :probeType="3"
+      ref="scroll"
+      @pageScroll="pageScroll"
+    >
       <home-swiper :bannerData="banner" />
       <recommend-view :recommendData="recommend" />
       <feature-view />
-      <tab-control :tabs="tabs" @tabItemClick="tabClick" ref="tabs"/>
+      <tab-control :tabs="tabs" @tabItemClick="tabClick" ref="tabs" />
       <goods-list :goods="goods[currentTab].list" />
     </scroll>
+    <back-top @click.native="backTopClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -18,6 +25,7 @@ import MainNavBar from "components/content/mainNavBar/MainNavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/bscroll/BScroll";
+import BackTop from "components/content/backTop/BackTop";
 
 import HomeSwiper from "./childComponents/HomeSwiper";
 import RecommendView from "./childComponents/RecommendView";
@@ -36,7 +44,8 @@ export default {
         sell: { list: [], page: 0 }
       },
       currentTab: "pop",
-      isSticky:false
+      isSticky: false,
+      isShowBackTop: false
     };
   },
 
@@ -45,6 +54,10 @@ export default {
     this.getGoodsData("pop");
     this.getGoodsData("new");
     this.getGoodsData("sell");
+
+    this.$bus.$on('goodsItemImageLoad',() => {
+      this.$refs.scroll.scroll.refresh();
+    })
   },
   methods: {
     getHomeMultidata() {
@@ -87,18 +100,24 @@ export default {
           this.currentTab = "pop";
       }
     },
-    goodsPullUpLoad(scroll){
-      console.log('上拉加载数据')
-      this.getGoodsData(this.currentTab)
-      scroll.finishPullUp()
+    goodsPullUpLoad(scroll) {
+      console.log("上拉加载数据");
+      this.getGoodsData(this.currentTab);
+      scroll.finishPullUp();
     },
-    
+    backTopClick() {
+      this.$refs.scroll.scroll.scrollTo(0, 0, 500);
+    },
+    pageScroll(position) {
+      this.isShowBackTop = -position.y > 1000 ? true : false;
+    }
   },
   components: {
     MainNavBar,
     TabControl,
     GoodsList,
     Scroll,
+    BackTop,
     HomeSwiper,
     RecommendView,
     FeatureView
@@ -115,7 +134,5 @@ export default {
 .scrollWrapper {
   height: calc(100vh - 93px);
   overflow: hidden;
-  
 }
-
 </style>
