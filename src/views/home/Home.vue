@@ -31,6 +31,7 @@ import HomeSwiper from "./childComponents/HomeSwiper";
 import RecommendView from "./childComponents/RecommendView";
 import FeatureView from "./childComponents/FeatureView";
 import { getHomeMultidata, getGoodsData } from "network/home";
+import { debounce } from "utils";
 export default {
   name: "Home",
   data() {
@@ -54,10 +55,13 @@ export default {
     this.getGoodsData("pop");
     this.getGoodsData("new");
     this.getGoodsData("sell");
-
-    this.$bus.$on('goodsItemImageLoad',() => {
-      this.$refs.scroll.scroll.refresh();
-    })
+  },
+  mounted() {
+    const refresh = debounce(this.$refs.scroll.refresh, 500);
+    this.$bus.$on("goodsItemImageLoad", () => {
+      // this.$refs.scroll.scroll && this.$refs.scroll.scroll.refresh();
+      refresh();
+    });
   },
   methods: {
     getHomeMultidata() {
@@ -106,7 +110,7 @@ export default {
       scroll.finishPullUp();
     },
     backTopClick() {
-      this.$refs.scroll.scroll.scrollTo(0, 0, 500);
+      this.$refs.this.$refs.scroll.scroll.scrollTo(0, 0, 500);
     },
     pageScroll(position) {
       this.isShowBackTop = -position.y > 1000 ? true : false;

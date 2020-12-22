@@ -8,7 +8,8 @@ module.exports = {
         assets: "@/assets",
         views: "@/views",
         network: "@/network",
-      },
-    },
-  },
+        utils: "@/utils"
+      }
+    }
+  }
 };
