@@ -44,7 +44,7 @@ export default {
   text-align: center;
   justify-content: center;
   align-items: center;
-  /* background-color: #f9f9f9; */
+  background-color: #fff;
 }
 .tabControlItem {
   flex: 1;

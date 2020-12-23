@@ -2,6 +2,13 @@
   <div class="homePage">
     <!-- 顶部导航 -->
     <main-nav-bar title="首页" />
+    <tab-control
+      :tabs="tabs"
+      @tabItemClick="tabClick"
+      ref="tabsFixed"
+      class="tabControlFixed"
+      v-show="isTabFixed"
+    />
     <!-- 首页轮播 -->
     <scroll
       class="scrollWrapper"
@@ -10,7 +17,7 @@
       ref="scroll"
       @pageScroll="pageScroll"
     >
-      <home-swiper :bannerData="banner" />
+      <home-swiper :bannerData="banner" @swiperImgLoad="swiperImgLoad" />
       <recommend-view :recommendData="recommend" />
       <feature-view />
       <tab-control :tabs="tabs" @tabItemClick="tabClick" ref="tabs" />
@@ -46,7 +53,9 @@ export default {
       },
       currentTab: "pop",
       isSticky: false,
-      isShowBackTop: false
+      isShowBackTop: false,
+      tabsOffsetTop: 0,
+      isTabFixed: false
     };
   },
 
@@ -103,6 +112,8 @@ export default {
         default:
           this.currentTab = "pop";
       }
+      this.$refs.tabs.currentTab = index;
+      this.$refs.tabsFixed.currentTab = index;
     },
     goodsPullUpLoad(scroll) {
       console.log("上拉加载数据");
@@ -114,6 +125,12 @@ export default {
     },
     pageScroll(position) {
       this.isShowBackTop = -position.y > 1000 ? true : false;
+      this.isTabFixed = -position.y + 44 > this.tabsOffsetTop;
+    },
+    swiperImgLoad() {
+      // 获取tabcontrol的offsetTop值----$el获取组件的子组件
+      console.log(this.$refs.tabs.$el.offsetTop);
+      this.tabsOffsetTop = this.$refs.tabs.$el.offsetTop;
     }
   },
   components: {
@@ -138,5 +155,12 @@ export default {
 .scrollWrapper {
   height: calc(100vh - 93px);
   overflow: hidden;
+}
+.tabControlFixed {
+  position: fixed;
+  top: 44px;
+  left: 0;
+  right: 0;
+  z-index: 99;
 }
 </style>
