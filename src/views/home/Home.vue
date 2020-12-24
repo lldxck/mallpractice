@@ -55,7 +55,8 @@ export default {
       isSticky: false,
       isShowBackTop: false,
       tabsOffsetTop: 0,
-      isTabFixed: false
+      isTabFixed: false,
+      scrollY: 0
     };
   },
 
@@ -71,6 +72,22 @@ export default {
       // this.$refs.scroll.scroll && this.$refs.scroll.scroll.refresh();
       refresh();
     });
+  },
+  destroyed() {
+    console.log("home destroyed");
+  },
+  activated() {
+    console.log("home activated");
+    //进入页面（页面获得焦点时）----获得上次记录的滚动位置
+    this.$refs.scroll.scroll.scrollTo(0, this.scrollY, 0);
+    // 刷新scroll（防止滚动之后页面不能滑动的问题）
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    console.log("home deactivated");
+    // 离开的时候记录一下scroll滚动的位置
+    console.log(this.$refs.scroll.scroll.y);
+    this.scrollY = this.$refs.scroll.scroll.y;
   },
   methods: {
     getHomeMultidata() {
@@ -121,7 +138,7 @@ export default {
       scroll.finishPullUp();
     },
     backTopClick() {
-      this.$refs.this.$refs.scroll.scroll.scrollTo(0, 0, 500);
+      this.$refs.scroll.scroll.scrollTo(0, 0, 500);
     },
     pageScroll(position) {
       this.isShowBackTop = -position.y > 1000 ? true : false;

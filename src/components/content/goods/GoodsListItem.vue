@@ -7,13 +7,13 @@
       <span class="collect">11</span>
     </div> 
   </div> -->
-  <div class="goodsListItem">
+  <div class="goodsListItem" @click="goodsListItem(goodsItem.iid)">
     <!-- load事件=>监听img加载完成执行的事件 -->
-    <img :src="goodsItem.show.img" alt="" @load="imgLoad"/>
-    <div class="title">{{goodsItem.title}}</div>
+    <img :src="goodsItem.show.img" alt="" @load="imgLoad" />
+    <div class="title">{{ goodsItem.title }}</div>
     <div class="goodInfo">
-      <span class="price">¥{{goodsItem.price}}</span>
-      <span class="collect">{{goodsItem.cfav}}</span>
+      <span class="price">¥{{ goodsItem.price }}</span>
+      <span class="collect">{{ goodsItem.cfav }}</span>
     </div>
   </div>
 </template>
@@ -32,12 +32,15 @@ export default {
   data() {
     return {};
   },
-  methods:{
-    imgLoad(){
-      console.log('图片加载完成')
-      this.$bus.$emit('goodsItemImageLoad')
+  methods: {
+    imgLoad() {
+      console.log("图片加载完成");
+      this.$bus.$emit("goodsItemImageLoad");
+    },
+    goodsListItem(iid) {
+      this.$router.push({ path: "/detail/" + iid });
     }
-  },
+  }
 };
 </script>
 

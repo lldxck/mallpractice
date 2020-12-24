@@ -7,36 +7,42 @@ const Home = () => import("views/home/Home.vue");
 const Category = () => import("views/category/Category.vue");
 const ShopCart = () => import("views/shopCart/ShopCart.vue");
 const Profile = () => import("views/profile/Profile.vue");
+const Detail = () => import("views/detail/Detail.vue");
 
 const routes = [
   {
     path: "",
-    redirect: "/home",
+    redirect: "/home"
   },
   {
     path: "/home",
     name: "home",
-    component: Home,
+    component: Home
   },
   {
     path: "/category",
     name: "category",
-    component: Category,
+    component: Category
   },
   {
     path: "/shopCart",
     name: "shopCart",
-    component: ShopCart,
+    component: ShopCart
   },
   {
     path: "/profile",
     name: "profile",
-    component: Profile,
+    component: Profile
   },
+  {
+    path: "/detail/:iid",
+    name: "detail",
+    component: Detail
+  }
 ];
 
 const router = new VueRouter({
-  routes,
+  routes
 });
 
 export default router;
