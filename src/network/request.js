@@ -1,8 +1,9 @@
 import axios from "axios";
+import * as api from './api'
 
 export function request(config) {
   const instance = axios.create({
-    baseURL: "http://123.207.32.32:8000/api/h8",
+    baseURL: api.BASEURL,
     timeout: 10000,
   });
 

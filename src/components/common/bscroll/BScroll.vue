@@ -42,7 +42,7 @@ export default {
   },
   updated() {
     //重新计算高度----(未使用监听图片加载事件来监听图片加载完而进行scroll刷新时来解决不能滚动问题)
-    // this.scroll.refresh();
+    this.scroll.refresh();
   },
   methods: {
     refresh() {
