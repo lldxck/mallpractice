@@ -22,10 +22,24 @@ export class Goods {
 // 整合商品店铺信息数据
 export class Shop {
   constructor(shopInfo) {
-    this.shopLogo = api.BASEURL + shopInfo.shopLogo;
-    this.name=shopInfo.name;
-    this.cSells=shopInfo.cSells;
-    this.cGoods=shopInfo.cGoods;
-    this.score=shopInfo.score;
+    this.shopLogo = shopInfo.shopLogo;
+    this.name = shopInfo.name;
+    this.cSells = shopInfo.cSells;
+    this.cGoods = shopInfo.cGoods;
+    this.score = shopInfo.score;
+  }
+}
+// 整合商品详情信息数据
+export class Detail {
+  constructor(detailInfo) {
+    this.desc = detailInfo.desc;
+    this.detailImage = detailInfo.detailImage;
+  }
+}
+// 整合商品参数信息数据
+export class Params {
+  constructor(itemParams) {
+    this.info = itemParams.info;
+    this.rule = itemParams.rule;
   }
 }

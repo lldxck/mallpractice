@@ -57,7 +57,8 @@ export default {
 
 <style>
 .detailShopInfo {
-  padding: 0 8px;
+  padding: 0 8px 15px;
+  border-bottom: 5px solid #f9f9f9;
 }
 .shopName {
   display: flex;
@@ -71,6 +72,9 @@ export default {
   border-radius: 25px;
   background-color: pink;
   margin-right: 16px;
+}
+.shopLogo img{
+  width: 100%;
 }
 .nameText {
   font-size: 18px;

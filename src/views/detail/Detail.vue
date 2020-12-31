@@ -2,10 +2,15 @@
   <div class="detailPage">
     <!-- 顶部导航 -->
     <detail-nav-bar />
-    <scroll class="scrollContainer">
+    <scroll class="scrollContainer" ref="detailScroll">
       <detail-swiper :topImages="topImages" />
       <detail-base-info :goodsDetailBaseInfo="goodsItemBaseInfo" />
       <detail-shop-info :shopInfo="shopInfo" />
+      <detail-goods-info
+        :detailInfo="detailInfo"
+        @detailImageLoad="detailImageLoad"
+      />
+      <detail-params-info :goodsParams="goodsParams" />
     </scroll>
   </div>
 </template>
@@ -15,10 +20,13 @@ import DetailNavBar from "./childComponents/DetailNavBar";
 import DetailSwiper from "./childComponents/DetailSwiper";
 import DetailBaseInfo from "./childComponents/DetailBaseInfo";
 import DetailShopInfo from "./childComponents/DetailShopInfo";
+import DetailGoodsInfo from "./childComponents/DetailGoodsInfo";
+import DetailParamsInfo from './childComponents/DetailParamsInfo';
 
 import Scroll from "components/common/bscroll/BScroll";
+import { debounce } from "utils";
 
-import { getGoodsDetail, Goods, Shop } from "network/detail";
+import { getGoodsDetail, Goods, Shop, Detail, Params } from "network/detail";
 export default {
   name: "Detail",
   data() {
@@ -26,12 +34,22 @@ export default {
       iid: null,
       topImages: [],
       goodsItemBaseInfo: {},
-      shopInfo: {}
+      shopInfo: {},
+      detailInfo: {},
+      refresh: null,
+      goodsParams: {}
     };
   },
   created() {
     this.iid = this.$route.params.iid;
     this.getGoodsDetailData(this.iid);
+  },
+  mounted() {
+    this.refresh = debounce(this.$refs.detailScroll.refresh, 500);
+    // this.$on("detailImageLoad", () => {
+    //   console.log("监听图片加载完成");
+    //   refresh();
+    // });
   },
   methods: {
     getGoodsDetailData(iid) {
@@ -48,7 +66,13 @@ export default {
           data.shopInfo.services
         );
         this.shopInfo = new Shop(data.shopInfo);
+        this.detailInfo = new Detail(data.detailInfo);
+        this.goodsParams = new Params(data.itemParams);
       });
+    },
+    detailImageLoad() {
+      // console.log("监听图片加载完成");
+      this.refresh();
     }
   },
   components: {
@@ -56,6 +80,8 @@ export default {
     DetailSwiper,
     DetailBaseInfo,
     DetailShopInfo,
+    DetailGoodsInfo,
+    DetailParamsInfo,
     Scroll
   }
 };
