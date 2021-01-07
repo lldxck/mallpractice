@@ -44,6 +44,7 @@ export default {
 <style>
 .detailParamsInfo{
   padding:15px 8px;
+  border-bottom: 5px solid #f9f9f9;
 }
 table {
   width: 100%;

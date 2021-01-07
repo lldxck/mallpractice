@@ -11,6 +11,7 @@
         @detailImageLoad="detailImageLoad"
       />
       <detail-params-info :goodsParams="goodsParams" />
+      <detail-comment-info :commentInfo="commentInfo"/>
     </scroll>
   </div>
 </template>
@@ -21,7 +22,8 @@ import DetailSwiper from "./childComponents/DetailSwiper";
 import DetailBaseInfo from "./childComponents/DetailBaseInfo";
 import DetailShopInfo from "./childComponents/DetailShopInfo";
 import DetailGoodsInfo from "./childComponents/DetailGoodsInfo";
-import DetailParamsInfo from './childComponents/DetailParamsInfo';
+import DetailParamsInfo from "./childComponents/DetailParamsInfo";
+import DetailCommentInfo from './childComponents/DetailCommentInfo';
 
 import Scroll from "components/common/bscroll/BScroll";
 import { debounce } from "utils";
@@ -37,7 +39,8 @@ export default {
       shopInfo: {},
       detailInfo: {},
       refresh: null,
-      goodsParams: {}
+      goodsParams: {},
+      commentInfo:{},
     };
   },
   created() {
@@ -68,6 +71,7 @@ export default {
         this.shopInfo = new Shop(data.shopInfo);
         this.detailInfo = new Detail(data.detailInfo);
         this.goodsParams = new Params(data.itemParams);
+        this.commentInfo= data.rate;
       });
     },
     detailImageLoad() {
@@ -82,6 +86,7 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailParamsInfo,
+    DetailCommentInfo,
     Scroll
   }
 };
