@@ -38,9 +38,11 @@ import HomeSwiper from "./childComponents/HomeSwiper";
 import RecommendView from "./childComponents/RecommendView";
 import FeatureView from "./childComponents/FeatureView";
 import { getHomeMultidata, getGoodsData } from "network/home";
-import { debounce } from "utils";
+// import { debounce } from "utils";
+import {listImgLoadMixin} from 'mixins/mixins';
 export default {
   name: "Home",
+  mixins:[listImgLoadMixin],
   data() {
     return {
       banner: [],
@@ -56,7 +58,8 @@ export default {
       isShowBackTop: false,
       tabsOffsetTop: 0,
       isTabFixed: false,
-      scrollY: 0
+      scrollY: 0,
+      // itemImageLoad: null
     };
   },
 
@@ -67,11 +70,12 @@ export default {
     this.getGoodsData("sell");
   },
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh, 500);
-    this.$bus.$on("goodsItemImageLoad", () => {
-      // this.$refs.scroll.scroll && this.$refs.scroll.scroll.refresh();
-      refresh();
-    });
+    // const refresh = debounce(this.$refs.scroll.refresh, 500);
+    // this.itemImageLoad = () => {
+    //   // this.$refs.scroll.scroll && this.$refs.scroll.scroll.refresh();
+    //   refresh();
+    // };
+    // this.$bus.$on("goodsItemImageLoad", this.itemImageLoad);
   },
   destroyed() {
     console.log("home destroyed");
@@ -88,6 +92,7 @@ export default {
     // 离开的时候记录一下scroll滚动的位置
     console.log(this.$refs.scroll.scroll.y);
     this.scrollY = this.$refs.scroll.scroll.y;
+    // this.$bus.$off("goodsItemImageLoad", this.itemImageLoad);
   },
   methods: {
     getHomeMultidata() {

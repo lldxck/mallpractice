@@ -9,7 +9,7 @@
   </div> -->
   <div class="goodsListItem" @click="goodsListItem(goodsItem.iid)">
     <!-- load事件=>监听img加载完成执行的事件 -->
-    <img :src="goodsItem.show.img" alt="" @load="imgLoad" />
+    <img :src="showImage" alt="" @load="imgLoad" />
     <div class="title">{{ goodsItem.title }}</div>
     <div class="goodInfo">
       <span class="price">¥{{ goodsItem.price }}</span>
@@ -31,6 +31,14 @@ export default {
   },
   data() {
     return {};
+  },
+  computed:{
+    showImage(){
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
+  created(){
+    // console.log('数据',this.goodsItem)
   },
   methods: {
     imgLoad() {

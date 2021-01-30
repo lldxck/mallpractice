@@ -8,6 +8,12 @@ export function getGoodsDetail(params) {
   });
 }
 
+export function getRecommendData(){
+  return request({
+    url:'recommend',
+  })
+}
+
 // 整合商品详情页基础数据
 export class Goods {
   constructor(itemInfo, columns, services) {

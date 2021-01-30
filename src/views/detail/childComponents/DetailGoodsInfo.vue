@@ -43,7 +43,7 @@ export default {
   created() {},
   methods: {
     detailImageLoad() {
-      console.log("图片加载完成");
+      // console.log("图片加载完成");
       this.$emit("detailImageLoad");
     }
   }
